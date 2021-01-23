@@ -13,24 +13,23 @@ from googlesearch import search
 print("hello world")
 
 StockName = ['TCS', 'WIPRO', 'INFOSYS']
-SearchQuery=[]
+SearchQuery = []
 # Query generator for google search
 
-for i in StockName:
-    SearchQuery.append(i + " share BSE")
+for scrip in StockName:
+    SearchQuery.append(scrip + " share BSE")
 
-for eachStock in SearchQuery:
-
-query = 'TCS'
-for i in search(query,  # The query you want to run
-                tld='com',  # The top level domain
-                lang='en',  # The language
-                num=10,  # Number of results per page
-                start=0,  # First result to retrieve
-                stop=1,  # Last result to retrieve
-                pause=2.0,  # Lapse between HTTP requests
-                ):
-    BSEUrl = i
+for eachSearchQuery in SearchQuery:
+    print("each search query-->"+eachSearchQuery)
+    for i in search(eachSearchQuery,  # The query you want to run
+                    tld='com',  # The top level domain
+                    lang='en',  # The language
+                    num=10,  # Number of results per page
+                    start=0,  # First result to retrieve
+                    stop=1,  # Last result to retrieve
+                    pause=2.0,  # Lapse between HTTP requests
+                    ):
+        BSEUrl = i
     print("BSE Url-->" + BSEUrl)
 # print("url"+BSEUrl)
-print(type(BSEUrl))
+print("completed")
