@@ -12,11 +12,13 @@ from googlesearch import search
 
 print("hello world")
 
-StockName = ['TCS']#, 'WIPRO', 'INFOSYS']
+StockName = ['TCS', 'WIPRO', 'INFOSYS']
 SearchQuery = []
+BSEUrlsDict={}
+ScripCount=1
 # Query generator for google search
-GoogleSearchUrls=[]
-BSEUrl=[]
+GoogleSearchUrls = []
+BSEUrl = []
 for scrip in StockName:
     eachSearchQuery = scrip + " share price from BSEindia"
 
@@ -31,15 +33,26 @@ for scrip in StockName:
                        pause=2.0,  # Lapse between HTTP requests
                        ):
         BSEKeyword = 'bseindia'
-        GoogleSearchUrls.append(Urls)
-        print("URL---"+Urls)
-        for singleUrl in GoogleSearchUrls:
-            if BSEKeyword in singleUrl:
-                BSEUrl.append(singleUrl)
+        # GoogleSearchUrls.append(Urls)
+        #print("URL---" + Urls)
+        singleUrl=Urls
+        # for singleUrl in GoogleSearchUrls:
+        if BSEKeyword in singleUrl:
+            BSEUrl.append(singleUrl)
+            BSEUrlsDict.update({ScripCount: {'name': scrip, 'URL': singleUrl}})
+            print("BSE Url-->" + singleUrl)
+            ScripCount += 1
+            break
+        GoogleSearchUrls = []
 
-                print("BSE Url-->" + singleUrl)
-                break
-        GoogleSearchUrls=[]
 
+headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"}
+#url="https://medium.com/world-literature/creating-the-ultimate-list-100-books-to-read-before-you-die-45f1b722b2e5"
+urllib3.disable_warnings()
+for scrapingUrl in BSEUrl:
+    res=requests.get(scrapingUrl,verify=False,headers=headers)
+    res.raise_for_status()
+    soup=bs4.BeautifulSoup(res.text,"html.parser")            #'lxml')
+    ochl = soup.find_all("td", attrs={"class": "textsr"})
 # print("url"+BSEUrl)
 print("completed")
