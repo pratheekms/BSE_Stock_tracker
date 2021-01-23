@@ -12,24 +12,34 @@ from googlesearch import search
 
 print("hello world")
 
-StockName = ['TCS', 'WIPRO', 'INFOSYS']
+StockName = ['TCS']#, 'WIPRO', 'INFOSYS']
 SearchQuery = []
 # Query generator for google search
-
+GoogleSearchUrls=[]
+BSEUrl=[]
 for scrip in StockName:
-    SearchQuery.append(scrip + " share BSE")
+    eachSearchQuery = scrip + " share price from BSEindia"
 
-for eachSearchQuery in SearchQuery:
-    print("each search query-->"+eachSearchQuery)
-    for i in search(eachSearchQuery,  # The query you want to run
-                    tld='com',  # The top level domain
-                    lang='en',  # The language
-                    num=10,  # Number of results per page
-                    start=0,  # First result to retrieve
-                    stop=1,  # Last result to retrieve
-                    pause=2.0,  # Lapse between HTTP requests
-                    ):
-        BSEUrl = i
-    print("BSE Url-->" + BSEUrl)
+    # for eachSearchQuery in SearchQuery:
+    print("each search query-->" + eachSearchQuery)
+    for Urls in search(eachSearchQuery,  # The query you want to run
+                       tld='com',  # The top level domain
+                       lang='en',  # The language
+                       num=10,  # Number of results per page
+                       start=0,  # First result to retrieve
+                       stop=5,  # Last result to retrieve
+                       pause=2.0,  # Lapse between HTTP requests
+                       ):
+        BSEKeyword = 'bseindia'
+        GoogleSearchUrls.append(Urls)
+        print("URL---"+Urls)
+        for singleUrl in GoogleSearchUrls:
+            if BSEKeyword in singleUrl:
+                BSEUrl.append(singleUrl)
+
+                print("BSE Url-->" + singleUrl)
+                break
+        GoogleSearchUrls=[]
+
 # print("url"+BSEUrl)
 print("completed")
