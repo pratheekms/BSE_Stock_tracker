@@ -53,6 +53,7 @@ for scrapingUrl in BSEUrl:
     res=requests.get(scrapingUrl,verify=False,headers=headers)
     res.raise_for_status()
     soup=bs4.BeautifulSoup(res.text,"html.parser")            #'lxml')
-    ochl = soup.find_all("td", attrs={"class": "textsr"})
+    ochl = soup.find_all("div", {"class": "whitebox"})
+    print(ochl)
 # print("url"+BSEUrl)
 print("completed")
